@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\assets",
+    "\\assets\\icons",
+    "\\components",
+    "\\components\\buttons",
+    "\\components\\shared",
+    "\\components\\swipeCards",
+    "\\functions",
+    "\\screens",
+    "\\styles"
+  ],
+  "SelectedNode": "\\screens\\HomeScreen.js",
+  "PreviewInSolutionExplorer": false
+}
