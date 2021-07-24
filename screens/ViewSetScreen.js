@@ -11,7 +11,7 @@ import ErrorAlertLibrary from '../functions/ErrorAlertLibrary';
 //Components
 import Header from '../components/shared/Header';
 import CardInListButton from '../components/buttons/CardInListButton';
-import ListOfCards from '../components/buttons/ListOfSets';
+import ListOfCards from '../components/buttons/ListOfCards';
 //Icons
 import AddCardIcon from '../assets/icons/CirclePlusGold_icon.svg';
 import ThreeDotMenuIcon from '../assets/icons/ThreeDotMenu_icon.svg';
@@ -65,23 +65,10 @@ export default class ViewSetScreen extends Component {
                         cards: data.sets[this.props.route.params.setIndex].cards
                     });
                 });
-
-                console.log("card length after LoadSet: " + this.state.cards.length);
-                this.ReloadPage();
             })
             .catch(error => {
                 ErrorAlertLibrary.DisplayError("ViewStatScreen.LoadSet ERROR", error);
             })
-    }
-
-
-    ReloadPage = function () {
-        console.log("Reload");
-        this.setState(prevState => {
-            return ({
-                ...prevState
-            });
-        })
     }
 
 
@@ -163,25 +150,11 @@ export default class ViewSetScreen extends Component {
 
                 {(this.state.cards.length == 0) && <Text style={styles.noCardsText}>There are no cards</Text>}
 
-                {/*<FlatList
-                    style={styles.cardFlatlist}
-                    persistentScrollbar={true}
-                    keyExtractor={(itemData, index) => ("cardList" + index)}
-                    data={this.state.cards}
-                    renderItem={itemData => {
-                        return (
-                            <CardInListButton
-                                navigation={this.props.navigation}
-                                setIndex={this.props.route.params.setIndex}
-                                cardIndex={itemData.index}
-                                question={itemData.item.questionText}
-                                cardData={itemData.item}
-                            />
-                        );
-                    }}
-                />*/ }
-
-                <ListOfCards cards={this.state.cards} navigation={this.props.navigation} />
+                <ListOfCards
+                    cards={this.state.cards}
+                    navigation={this.props.navigation}
+                    setIndex={this.props.route.params.setIndex}
+                />
 
                 {/*<TouchableOpacity style={styles.newCardButton} onPress={() => this.CreateNewCard()}>
                     <Text style={styles.newCardButtonText}>New Card</Text>
@@ -233,11 +206,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 24,
         alignSelf: 'center',
-    },
-
-    cardFlatlist: {
-        padding: 10,
-        margin: 10,
     },
 
     bottomRow: {

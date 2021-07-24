@@ -32,7 +32,7 @@ const AsyncStorageLibrary = {
             cards: []
         }
 
-        AsyncStorage.getItem(this.storageString)
+        let setData = await AsyncStorage.getItem(this.storageString)
             .then(data => {
                 //Parsing the JSON string into an object to get data from it
                 var allSetData = JSON.parse(data);
@@ -62,7 +62,7 @@ const AsyncStorageLibrary = {
      * @param {number} setIndex_ Index for which set to delete
      */
     DeleteSet: async function (setIndex_) {
-        AsyncStorage.getItem(this.storageString)
+        let setData = await AsyncStorage.getItem(this.storageString)
             .then(data => {
                 //Parsing the JSON string into an object to get data from it
                 var allSetData = JSON.parse(data);
@@ -95,7 +95,7 @@ const AsyncStorageLibrary = {
             incorrect: 0
         }
 
-        AsyncStorage.getItem(this.storageString)
+        let setData = await AsyncStorage.getItem(this.storageString)
             .then(data => {
                 //Parsing the JSON string into an object to get data from it
                 var allSetData = JSON.parse(data);
@@ -116,7 +116,7 @@ const AsyncStorageLibrary = {
      * @param {number} cardIndex_ Index for which card to remove from the set
      */
     DeleteCard: async function (setIndex_, cardIndex_) {
-        AsyncStorage.getItem(this.storageString)
+        let setData = await AsyncStorage.getItem(this.storageString)
             .then(data => {
                 //Parsing the JSON string into an object to get data from it
                 var allSetData = JSON.parse(data);

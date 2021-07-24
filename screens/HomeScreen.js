@@ -39,7 +39,6 @@ export default class HomeScreen extends Component {
                 }
 
                 this.setState((prevState) => {
-                    console.log("==== HomeScreen.LoadSetData, DATA LOADED ====");
                     return ({
                         ...prevState,
                         allSetData: loadedSets.sets,
@@ -112,31 +111,6 @@ export default class HomeScreen extends Component {
     }
 
 
-    /**
-     * 
-     * @param {Array} setData_
-     */
-    RenderListOfSets = function (setData_) {
-        return (
-            <FlatList
-                style={styles.setFlatlist}
-                persistentScrollbar={true}
-                keyExtractor={(itemData, index) => ("setButton" + index)}
-                data={this.state.allSetData}
-                renderItem={itemData => {
-                    return (
-                        <SetInListButton
-                            navigation={this.props.navigation}
-                            setIndex={itemData.index}
-                            setData={itemData.item}
-                        />
-                    );
-                }}
-            />
-        );
-    }
-
-
     render() {
         return (
             <View style={styles.wrapper}>
@@ -145,25 +119,7 @@ export default class HomeScreen extends Component {
                     showBackButton={false}
                 />
 
-                {/*<FlatList
-                    style={styles.setFlatlist}
-                    persistentScrollbar={true}
-                    keyExtractor={(itemData, index) => ("setButton" + index)}
-                    data={this.state.allSetData}
-                    renderItem={itemData => {
-                        return (
-                            <SetInListButton
-                                navigation={this.props.navigation}
-                                setIndex={itemData.index}
-                                setData={itemData.item}
-                            />
-                        );
-                    }}
-                />*/}
-
-                {this.RenderListOfSets(this.state.allSetData)}
-
-                {/*<ListOfSets setData={this.state.allSetData} navigation={this.props.navigation}/>*/}
+                <ListOfSets setData={this.state.allSetData} navigation={this.props.navigation}/>
 
                 {(!this.state.showNewSetPrompt) && <TouchableOpacity style={styles.newSetButton} onPress={() => this.OpenNewSetPrompt()}>
                     <Text style={styles.newSetButtonText}>New Set</Text>

@@ -22,7 +22,7 @@ export default class ListOfCards extends Component {
                         return (
                             <CardInListButton
                                 navigation={this.props.navigation}
-                                setIndex={this.props.route.params.setIndex}
+                                setIndex={this.props.setIndex}
                                 cardIndex={itemData.index}
                                 question={itemData.item.questionText}
                                 cardData={itemData.item}
@@ -37,6 +37,11 @@ export default class ListOfCards extends Component {
 
 const styles = StyleSheet.create({
     wrapper: {
+        flex: 1,
+    },
 
+    cardFlatlist: {
+        padding: 10,
+        margin: 10,
     },
 });
