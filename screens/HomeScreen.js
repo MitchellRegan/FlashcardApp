@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import { StyleSheet, View, Text, FlatList, TextInput } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, View, Text, TextInput } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 //Styles
@@ -10,7 +10,6 @@ import AsyncStorageLibrary from '../functions/AsyncStorageLibrary';
 import ErrorAlertLibrary from '../functions/ErrorAlertLibrary';
 //Components
 import Header from '../components/shared/Header';
-import SetInListButton from '../components/buttons/SetInListButton';
 import ListOfSets from '../components/buttons/ListOfSets';
 
 export default class HomeScreen extends Component {
@@ -108,6 +107,14 @@ export default class HomeScreen extends Component {
      * */
     componentDidMount() {
         this.LoadSetData();
+
+        this._unsubscribe = this.props.navigation.addListener('focus', () => {
+            this.LoadSetData();
+        });
+    }
+
+    componentWillUnmount() {
+        this._unsubscribe();
     }
 
 
