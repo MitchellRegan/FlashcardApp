@@ -21,7 +21,7 @@ export default class SwipeCards extends Component {
 
         //Interpolator used to rotate the top card based on the X position
         this.rotate = this.position.x.interpolate({
-            inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
+            inputRange: [-SCREEN_WIDTH / 3, 0, SCREEN_WIDTH / 3],
             outputRange: ['-15deg', '0deg', '15deg'],
             extrapolate: 'clamp'
         });
@@ -63,6 +63,7 @@ export default class SwipeCards extends Component {
         });
 
         this.state = {
+            cards: this.props.cards,
             currentIndex: 0,
             numCorrect: 0,
             numIncorrect: 0,
@@ -88,7 +89,7 @@ export default class SwipeCards extends Component {
      * Returns a render of the current card's data
      * */
     RenderCard = () => {
-        return this.props.cards.map((item, i) => {
+        return this.state.cards.map((item, i) => {
             //Not rendering cards in the stack that are above the current index
             if (i < this.state.currentIndex) {
                 return null;
@@ -167,9 +168,20 @@ export default class SwipeCards extends Component {
      * Method called from ShowResults to shuffle the order of the deck and reset the current index
      * */
     ReshuffleDeck = function () {
+        var shuffledCards = this.state.cards;
+
+        //Randomly shuffling the order of the cards
+        for (var i = shuffledCards.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var temp = shuffledCards[i];
+            shuffledCards[i] = shuffledCards[j];
+            shuffledCards[j] = temp;
+        }
+
         this.setState(prevState => {
             return ({
                 ...prevState,
+                cards: shuffledCards,
                 currentIndex: 0,
                 numCorrect: 0,
                 numIncorrect: 0,
@@ -249,6 +261,9 @@ export default class SwipeCards extends Component {
                 }
             }
         });
+
+        //Shuffling the card order
+        this.ReshuffleDeck();
     }
 
 
@@ -260,7 +275,7 @@ export default class SwipeCards extends Component {
                 <View style={styles.cardHolderView}>
                     {this.RenderCard()}
 
-                    {(this.state.currentIndex >= this.props.cards.length) && this.ShowResults()}
+                    {(this.state.currentIndex >= this.state.cards.length) && this.ShowResults()}
                 </View>
 
                 <View style={styles.bottomBufferView} />
