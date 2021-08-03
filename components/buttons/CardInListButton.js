@@ -17,7 +17,6 @@ export default class CardInListButton extends Component {
 
     ViewCard = function () {
         this.props.navigation.navigate("ViewCard", {
-            cardData: this.props.cardData,
             cardIndex: this.props.cardIndex,
             setIndex: this.props.setIndex
         });

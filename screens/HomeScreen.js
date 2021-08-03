@@ -21,8 +21,6 @@ export default class HomeScreen extends Component {
             newSetName: '',
             allSetData: {}
         }
-
-        this.LoadSetData = this.LoadSetData.bind(this);
     }
 
 
@@ -91,14 +89,6 @@ export default class HomeScreen extends Component {
             .catch(error => {
                 ErrorAlertLibrary.DisplayError("HomeScreen.CreateNewSet ERROR", error);
             })
-
-        /*this.setState((prevState) => {
-            return ({
-                ...prevState,
-                showNewSetPrompt: false,
-                newSetName: ""
-            });
-        });*/
     }
 
 
@@ -108,13 +98,17 @@ export default class HomeScreen extends Component {
     componentDidMount() {
         this.LoadSetData();
 
-        this._unsubscribe = this.props.navigation.addListener('focus', () => {
+        this.reload = this.props.navigation.addListener('focus', () => {
             this.LoadSetData();
         });
     }
 
+
+    /**
+     * Method called when this component is unloaded
+     * */
     componentWillUnmount() {
-        this._unsubscribe();
+        this.reload();
     }
 
 

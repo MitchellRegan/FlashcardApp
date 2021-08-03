@@ -10,6 +10,7 @@ import HomeScreen from './screens/HomeScreen';
 import ViewSetScreen from './screens/ViewSetScreen';
 import ViewCardScreen from './screens/ViewCardScreen';
 import NewCardScreen from './screens/NewCardScreen';
+import EditCardScreen from './screens/EditCardScreen';
 import FlashCardScreen from './screens/FlashCardScreen';
 //Styles
 import Colors from './styles/Colors';
@@ -27,6 +28,7 @@ export default function App() {
                         <Stack.Screen name="ViewSet" component={ViewSetScreen} />
                         <Stack.Screen name="ViewCard" component={ViewCardScreen} />
                         <Stack.Screen name="NewCard" component={NewCardScreen} />
+                        <Stack.Screen name="EditCard" component={EditCardScreen} />
                         <Stack.Screen name="FlashCard" component={FlashCardScreen} />
                     </Stack.Navigator>
 

@@ -18,11 +18,46 @@ const SCREENWIDTH = Dimensions.get("window").width;
 
 /**
  * Displays all of the information for a specific flashcard
- * Props: "cardData" for the information stored in the card, "cardIndex" for which card this is in the set, and "setIndex" for which set this card belongs to
+ * Props: "cardIndex" for which card this is in the set, and "setIndex" for which set this card belongs to
  * */
 export default class ViewCardScreen extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            questionText: '',
+            questionImage: null,
+            answerText: '',
+            answerImage: null,
+            correct: 0,
+            incorrect: 0
+        }
+    }
+
+
+    /**
+     * Function to load all of the card data from the AsyncStorageLibrary
+     * */
+    LoadCardData = function () {
+        AsyncStorageLibrary.RetrieveAllSets()
+            .then(data => {
+                //Getting our specific card's data from the entire set list
+                var cardData = data.sets[this.props.route.params.setIndex].cards[this.props.route.params.cardIndex];
+                //Storing the card's data in our state
+                this.setState(prevState => {
+                    return ({
+                        questionText: cardData.questionText,
+                        questionImage: cardData.questionImage,
+                        answerText: cardData.answerText,
+                        answerImage: cardData.answerImage,
+                        correct: cardData.correct,
+                        incorrect: cardData.incorrect
+                    });
+                })
+            })
+            .catch(error => {
+                ErrorAlertLibrary.DisplayError("ViewCardScreen.LoadCardData ERROR", error);
+            })
     }
 
 
@@ -31,11 +66,11 @@ export default class ViewCardScreen extends Component {
      * @returns {string} A string to display the correct percentage
      * */
     FindPercentCorrect = function () {
-        if (this.props.route.params.cardData.incorrect + this.props.route.params.cardData.correct == 0) {    
+        if (this.state.incorrect + this.state.correct == 0) {    
             return "0%";
         }
 
-        var percent = this.props.route.params.cardData.correct / (this.props.route.params.cardData.correct + this.props.route.params.cardData.incorrect);
+        var percent = this.state.correct / (this.state.correct + this.state.incorrect);
         percent *= 10;
         return "" + Math.round(percent) + "%";
     }
@@ -77,8 +112,38 @@ export default class ViewCardScreen extends Component {
     }
 
 
+    /*
+     * Called from the ThreeDotMenuIcon to change the data stored in this card
+     * */
     EditCard = function () {
-        console.log("Edit card");
+        this.props.navigation.navigate("EditCard", {
+            setIndex: this.props.route.params.setIndex,
+            cardIndex: this.props.route.params.cardIndex,
+            questionText: this.state.questionText,
+            questionImage: this.state.questionImage,
+            answerText: this.state.answerText,
+            answerImage: this.state.answerImage,
+        });
+    }
+
+
+    /**
+     * Method called when this component is initially loaded
+     * */
+    componentDidMount() {
+        this.LoadCardData();
+
+        this.reload = this.props.navigation.addListener('focus', () => {
+            this.LoadCardData();
+        });
+    }
+
+
+    /**
+     * Method called when this component is unloaded
+     * */
+    componentWillUnmount() {
+        this.reload();
     }
 
 
@@ -110,13 +175,13 @@ export default class ViewCardScreen extends Component {
                             numberOfLines={5}
                             textAlignVertical={"top"}
                         >
-                            {this.props.route.params.cardData.questionText}
+                            {this.state.questionText}
                         </Text>
                     </View>
 
-                    {(this.props.route.params.cardData.questionImage != null) && <Image
+                    {(this.state.questionImage != null) && <Image
                         style={styles.image}
-                        source={{ uri: this.props.route.params.cardData.questionImage }}
+                        source={{ uri: this.state.questionImage }}
                     />}
 
                     <View style={styles.textBlockView}>
@@ -127,13 +192,13 @@ export default class ViewCardScreen extends Component {
                             numberOfLines={5}
                             textAlignVertical={"top"}
                         >
-                            {this.props.route.params.cardData.answerText}
+                            {this.state.answerText}
                         </Text>
                     </View>
 
-                    {(this.props.route.params.cardData.answerImage != null) && <Image
+                    {(this.state.answerImage != null) && <Image
                         style={styles.image}
-                        source={{ uri: this.props.route.params.cardData.answerImage }}
+                        source={{ uri: this.state.answerImage }}
                     />}
 
                     <View style={styles.percentageView}>
