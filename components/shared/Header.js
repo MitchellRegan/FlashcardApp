@@ -35,7 +35,7 @@ export default class Header extends Component {
                 {(!this.props.showBackButton) && <View style={{ width: 30 }} />}
 
                 <TouchableOpacity style={{justifyContent: 'center'}} onPress={() => this.BuildDetails()}>
-                    <Text style={styles.headerText}>Flashcards</Text>
+                    <Text style={styles.headerText}>FLASHCARDS</Text>
                 </TouchableOpacity>
 
                 <View style={{ width: 30 }} />
@@ -50,9 +50,11 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingLeft: 15,
-        paddingRight: 15,
-        backgroundColor: Colors.primary
+        paddingLeft: 20,
+        paddingRight: 20,
+        backgroundColor: Colors.primary,
+        borderBottomEndRadius: 100,
+        borderBottomStartRadius: 100,
     },
 
     backButton: {

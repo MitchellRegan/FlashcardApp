@@ -41,12 +41,21 @@ export default class SetInListButton extends Component {
 
     render() {
         return (
-            <View style={styles.wrapper}>
+            <View style={[styles.wrapper, this.props.setData.backgroundColor != null ? { backgroundColor: this.props.setData.backgroundColor } : { backgroundColor: Colors.tertiary }]}>
                 <TouchableOpacity style={styles.setButton} onPress={() => this.ViewSet()}>
-                    <Text style={styles.setName}>{this.props.setData.setName}</Text>
+                    <Text
+                        style={[styles.setName, this.props.setData.textColor != null ? { color: this.props.setData.textColor } : { color: '#fff' }]}>
+                        {this.props.setData.setName}
+                    </Text>
                     <View style={styles.countDateView}>
-                        <Text style={styles.cardCount}>Cards: {this.props.setData.cards.length}</Text>
-                        <Text style={styles.date}>{this.ConvertDateToString(this.props.setData.dateCreated)}</Text>
+                        <Text
+                            style={[styles.cardCount, this.props.setData.textColor != null ? { color: this.props.setData.textColor } : { color: '#fff' }]}>
+                            Cards: {this.props.setData.cards.length}
+                        </Text>
+                        <Text
+                            style={[styles.date, this.props.setData.textColor != null ? { color: this.props.setData.textColor } : { color: '#fff' }]}>
+                            {this.ConvertDateToString(this.props.setData.dateCreated)}
+                        </Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -58,7 +67,7 @@ const styles = StyleSheet.create({
     wrapper: {
         backgroundColor: Colors.tertiary,
         borderRadius: 10,
-        borderColor: Colors.lightGrey,
+        borderColor: Colors.setBlack,
         borderWidth: 1,
         marginBottom: 15,
     },

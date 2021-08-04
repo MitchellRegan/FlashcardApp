@@ -25,10 +25,12 @@ const AsyncStorageLibrary = {
      * Creates a new, empty set of flashcards
      * @param {string} setName_ The string containing the name of the new set
      */
-    CreateNewSet: async function (setName_) {
+    CreateNewSet: async function (setName_, backgroundColor_ = '#fff', textColor_ = '#000') {
         var newSet = {
             setName: setName_,
             dateCreated: new Date(),
+            backgroundColor: backgroundColor_,
+            textColor: textColor_,
             cards: []
         }
 

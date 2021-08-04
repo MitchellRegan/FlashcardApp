@@ -146,7 +146,7 @@ export default class ViewSetScreen extends Component {
                     </MenuOptions>
                 </Menu>
 
-                <Text style={styles.setNameText}>{this.props.route.params.setData.setName}</Text>
+                <Text style={styles.setNameText}>Cards in {this.props.route.params.setData.setName}</Text>
 
                 {(this.state.cards.length == 0) && <Text style={styles.noCardsText}>There are no cards</Text>}
 
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     setNameText: {
         fontFamily: Fonts.serif,
         fontWeight: 'bold',
-        fontSize: 24,
+        fontSize: 20,
         alignSelf: 'center',
     },
 
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         marginBottom: 8,
         marginRight: 8,
-        backgroundColor: Colors.lightGrey,
+        backgroundColor: Colors.redText,
     },
 
     newCardButtonText: {

@@ -258,12 +258,13 @@ const styles = StyleSheet.create({
     headerText: {
         fontFamily: Fonts.serif,
         fontWeight: 'bold',
-        fontSize: 16,
+        fontSize: 20,
     },
 
     contentText: {
+        fontFamily: Fonts.serif,
+        fontSize: 16,
         borderRadius: 5,
-        borderColor: Colors.lightGrey,
         borderWidth: 1,
         paddingLeft: 5,
         paddingRight: 5,
