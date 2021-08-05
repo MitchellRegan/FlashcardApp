@@ -86,6 +86,58 @@ export default class SwipeCards extends Component {
 
 
     /**
+     * Method to get the font size for text displayed on a card based on the length of the text and if there's also a picture
+     * @param {number} textLength_ The length of the text for this side of the card
+     * @param {string} picture_ File path for the picture for this side of the card
+     * @returns {number} Returns a string with the font size to be used in a style
+     */
+    AdjustCardTextSize = function (textLength_, picture_) {
+        //Variable to hold the current max character limit for the card text
+        var maxCharLimit = 256;
+        var hasPicture = (picture_ != null);
+
+        //If a picture exists, we have to limit the size of the text so that it doesn't overflow off the card
+        if (hasPicture) {
+            //If the text is an eighth the length of the max character count
+            if (textLength_ < maxCharLimit / 8) {
+                return 32;
+            }
+            //If the text is a quarter the length of the max character count
+            else if (textLength_ < maxCharLimit / 4) {
+                return 24;
+            }
+            //If the text is half the length of the max character count
+            else if (textLength_ < maxCharLimit / 2) {
+                return 20;
+            }
+            //If the text is more than half the length of the max character count
+            else {
+                return 16;
+            }
+        }
+        //If no picture exists, we can make the text size a bit larger
+        else {
+            //If the text is an eighth the length of the max character count
+            if (textLength_ < maxCharLimit / 8) {
+                return 36;
+            }
+            //If the text is a quarter the length of the max character count
+            else if (textLength_ < maxCharLimit / 4) {
+                return 32;
+            }
+            //If the text is half the length of the max character count
+            else if (textLength_ < maxCharLimit / 2) {
+                return 24;
+            }
+            //If the text is more than half the length of the max character count
+            else {
+                return 20;
+            }
+        }
+    }
+
+
+    /**
      * Returns a render of the current card's data
      * */
     RenderCard = () => {
@@ -117,7 +169,7 @@ export default class SwipeCards extends Component {
                             <Text style={styles.cardQuestionHeader}>QUESTION</Text>
 
                             <View style={styles.cardContentView}>
-                                <Text style={styles.cardText}>{item.questionText}</Text>
+                                <Text style={[styles.cardText, {fontSize: this.AdjustCardTextSize(item.questionText.length, item.questionImage)}]}>{item.questionText}</Text>
                                 {(item.questionImage != null) && <Image style={styles.cardPicture} source={{ uri: item.questionImage }} />}
                             </View>
 
@@ -131,7 +183,7 @@ export default class SwipeCards extends Component {
                             <Text style={styles.cardAnswerHeader}>ANSWER</Text>
 
                             <View style={styles.cardContentView}>
-                                <Text style={styles.cardText}>{item.answerText}</Text>
+                                <Text style={[styles.cardText, { fontSize: this.AdjustCardTextSize(item.answerText.length, item.answerImage) }]}>{item.answerText}</Text>
                                 {(item.answerImage != null) && <Image style={styles.cardPicture} source={{ uri: item.answerImage }} />}
                             </View>
 
@@ -150,11 +202,11 @@ export default class SwipeCards extends Component {
                         key={i}
                         style={[{ opacity: this.nextCardOpacity, transform: [{ scale: this.nextCardScale }] }, styles.cardAnimView]}
                     >
-                        <View style={[styles.cardImage, { backgroundColor: item.color }]}>
+                        <View style={styles.cardImage}>
                             <Text style={styles.cardQuestionHeader}>QUESTION</Text>
 
                             <View style={styles.cardContentView}>
-                                <Text style={styles.cardText}>{item.questionText}</Text>
+                                <Text style={[styles.cardText, { fontSize: this.AdjustCardTextSize(item.questionText.length, item.questionImage) }]}>{item.questionText}</Text>
                             </View>
                         </View>
                     </Animated.View>
@@ -344,6 +396,7 @@ const styles = StyleSheet.create({
         flex: 1,
         marginLeft: 10,
         marginRight: 10,
+        justifyContent: 'center',
     },
 
     cardText: {
