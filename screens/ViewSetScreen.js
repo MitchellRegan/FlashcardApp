@@ -169,6 +169,8 @@ export default class ViewSetScreen extends Component {
                     cards={this.state.cards}
                     navigation={this.props.navigation}
                     setIndex={this.props.route.params.setIndex}
+                    backgroundColor={this.props.route.params.setData.backgroundColor}
+                    textColor={this.props.route.params.setData.textColor}
                 />
 
                 {/*<TouchableOpacity style={styles.newCardButton} onPress={() => this.CreateNewCard()}>

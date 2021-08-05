@@ -26,6 +26,9 @@ export default class ListOfCards extends Component {
                                 cardIndex={itemData.index}
                                 question={itemData.item.questionText}
                                 cardData={itemData.item}
+                                setColor={this.props.backgroundColor}
+                                setTextColor={this.props.textColor}
+                                lastCard={itemData.index == this.props.cards.length - 1}
                             />
                         );
                     }}
