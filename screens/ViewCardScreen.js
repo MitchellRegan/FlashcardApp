@@ -25,6 +25,7 @@ export default class ViewCardScreen extends Component {
         super(props);
 
         this.state = {
+            cardName: '',
             questionText: '',
             questionImage: null,
             answerText: '',
@@ -44,6 +45,7 @@ export default class ViewCardScreen extends Component {
                 //Storing the card's data in our state
                 this.setState(prevState => {
                     return ({
+                        cardName: cardData.cardName,
                         questionText: cardData.questionText,
                         questionImage: cardData.questionImage,
                         answerText: cardData.answerText,
@@ -117,6 +119,7 @@ export default class ViewCardScreen extends Component {
         this.props.navigation.navigate("EditCard", {
             setIndex: this.props.route.params.setIndex,
             cardIndex: this.props.route.params.cardIndex,
+            cardName: this.state.cardName,
             questionText: this.state.questionText,
             questionImage: this.state.questionImage,
             answerText: this.state.answerText,
@@ -163,6 +166,8 @@ export default class ViewCardScreen extends Component {
                         </MenuOption>
                     </MenuOptions>
                 </Menu>
+
+                <Text style={styles.cardNameText}>{this.state.cardName}</Text>
 
                 <ScrollView style={styles.scrollView}>
                     <View style={styles.textBlockView}>
@@ -237,6 +242,13 @@ const styles = StyleSheet.create({
         color: Colors.redText
     },
 
+    cardNameText: {
+        fontFamily: Fonts.serif,
+        fontWeight: 'bold',
+        fontSize: 20,
+        alignSelf: 'center',
+    },
+
     scrollView: {
         margin: 20,
         marginTop: 0,
@@ -255,6 +267,7 @@ const styles = StyleSheet.create({
     },
 
     contentText: {
+        backgroundColor: Colors.setWhite,
         fontFamily: Fonts.serif,
         fontSize: 16,
         borderRadius: 5,

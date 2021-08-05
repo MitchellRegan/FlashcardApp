@@ -19,18 +19,33 @@ const SCREENWIDTH = Dimensions.get("window").width;
 
 /**
  * A screen that allows the user to edit the contents of a flashcard
- * Props: setIndex, cardIndex, questionText, questionImage, answerText, and answerImage 
+ * Props: setIndex, cardIndex, cardName, questionText, questionImage, answerText, and answerImage 
  * */
 export default class EditCardScreen extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            cardName: this.props.route.params.cardName,
             questionText: this.props.route.params.questionText,
             questionImage: this.props.route.params.questionImage,
             answerText: this.props.route.params.answerText,
             answerImage: this.props.route.params.answerImage
         }
+    }
+
+
+    /**
+     * Called from the onChangeText method of a TextInput field to update the cardName text in this.state
+     * @param {string} question_ The string to save as the name for the card
+     */
+    UpdateCardName = function (newName_) {
+        this.setState((prevState) => {
+            return ({
+                ...prevState,
+                cardName: newName_
+            });
+        });
     }
 
 
@@ -153,8 +168,8 @@ export default class EditCardScreen extends Component {
             return;
         }
 
-        AsyncStorageLibrary.EditCard(this.props.route.params.setIndex, this.props.route.params.cardIndex, this.state.questionText,
-            this.state.answerText, this.state.questionImage, this.state.answerImage)
+        AsyncStorageLibrary.EditCard(this.props.route.params.setIndex, this.props.route.params.cardIndex, this.state.cardName,
+            this.state.questionText, this.state.answerText, this.state.questionImage, this.state.answerImage)
             .then(() => {
                 this.props.navigation.goBack();
             })
@@ -176,6 +191,19 @@ export default class EditCardScreen extends Component {
                 <Text style={styles.subtitleText}>For {this.props.route.params.setName}</Text>
 
                 <ScrollView style={styles.scrollView}>
+                    <View style={styles.inputView}>
+                        <Text style={styles.inputTitleText}>Card Name<Text style={styles.requiredText}>*</Text></Text>
+
+                        <TextInput
+                            style={styles.textInput}
+                            multiline={false}
+                            maxLength={25}
+                            placeholder={"Example: Vocab word X"}
+                            value={this.state.cardName}
+                            onChangeText={(newName_) => this.UpdateCardName(newName_)}
+                        />
+                    </View>
+
                     <View style={styles.inputView}>
                         <Text style={styles.inputTitleText}>Question<Text style={styles.requiredText}>*</Text></Text>
 
@@ -253,10 +281,10 @@ export default class EditCardScreen extends Component {
                     <TouchableOpacity
                         style={styles.createButton}
                         onPress={() => this.SaveChanges()}
-                        disabled={(this.state.questionText == '' || this.state.answerText == '')}
+                        disabled={(this.state.cardName == '' || this.state.questionText == '' || this.state.answerText == '')}
                     >
-                        {(this.state.questionText != '' && this.state.answerText != '') && <Text style={styles.createText}>Save</Text>}
-                        {(this.state.questionText == '' || this.state.answerText == '') && <Text style={styles.disabledCreateText}>Save</Text>}
+                        {(this.state.cardName != '' && this.state.questionText != '' && this.state.answerText != '') && <Text style={styles.createText}>Save</Text>}
+                        {(this.state.cardName == '' || this.state.questionText == '' || this.state.answerText == '') && <Text style={styles.disabledCreateText}>Save</Text>}
                     </TouchableOpacity>
                 </View>
             </View>
@@ -301,8 +329,9 @@ const styles = StyleSheet.create({
     },
 
     textInput: {
+        backgroundColor: Colors.setWhite,
         borderRadius: 5,
-        borderColor: '#000',
+        borderColor: Colors.setBlack,
         borderWidth: 1,
         paddingLeft: 5,
         paddingRight: 5,
@@ -338,18 +367,18 @@ const styles = StyleSheet.create({
 
     imageUploadButton: {
         borderRadius: 5,
-        borderColor: '#000',
+        borderColor: Colors.setBlack,
         borderWidth: 1,
-        backgroundColor: Colors.lightGrey,
+        backgroundColor: Colors.setWhite,
         alignSelf: 'center',
     },
 
     imageUploadText: {
-        fontSize: 12,
-        paddingLeft: 8,
-        paddingRight: 8,
-        paddingTop: 3,
-        paddingBottom: 3,
+        fontSize: 14,
+        paddingLeft: 12,
+        paddingRight: 12,
+        paddingTop: 6,
+        paddingBottom: 6,
     },
 
     requiredText: {

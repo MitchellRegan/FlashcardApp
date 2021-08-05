@@ -103,13 +103,24 @@ export default class HomeScreen extends Component {
      * @param {boolean} cancel_ If false, the set isn't created and the prompt is closed
      * */
     CreateNewSet = function (cancel_ = false) {
-        AsyncStorageLibrary.CreateNewSet(this.state.newSetName, this.state.newSetColor, this.state.newSetTextColor)
-            .then(() => {
-                this.LoadSetData();
-            })
-            .catch(error => {
-                ErrorAlertLibrary.DisplayError("HomeScreen.CreateNewSet ERROR", error);
-            })
+        if (cancel_) {
+            this.setState(prevState => {
+                return ({
+                    ...prevState,
+                    showNewSetPrompt: false,
+                });
+            });
+            return;
+        }
+        else {
+            AsyncStorageLibrary.CreateNewSet(this.state.newSetName, this.state.newSetColor, this.state.newSetTextColor)
+                .then(() => {
+                    this.LoadSetData();
+                })
+                .catch(error => {
+                    ErrorAlertLibrary.DisplayError("HomeScreen.CreateNewSet ERROR", error);
+                })
+        }
     }
 
 
@@ -221,7 +232,7 @@ export default class HomeScreen extends Component {
                     </ScrollView>
 
                     <View style={styles.promptButtonView}>
-                        <TouchableOpacity style={styles.cancelButton} onPress={() => this.CreateNewSet(false)}>
+                        <TouchableOpacity style={styles.cancelButton} onPress={() => this.CreateNewSet(true)}>
                             <Text style={styles.cancelText}>Cancel</Text>
                         </TouchableOpacity>
 

@@ -220,8 +220,9 @@ const styles = StyleSheet.create({
     },
 
     textInput: {
+        backgroundColor: Colors.setWhite,
         borderRadius: 5,
-        borderColor: '#000',
+        borderColor: Colors.setBlack,
         borderWidth: 1,
         paddingLeft: 5,
         paddingRight: 5,

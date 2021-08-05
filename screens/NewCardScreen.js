@@ -23,11 +23,26 @@ export default class NewCardScreen extends Component {
         super(props);
 
         this.state = {
+            cardName: '',
             questionText: '',
             questionImage: null,
             answerText: '',
             answerImage: null
         }
+    }
+
+
+    /**
+     * Called from the onChangeText method of a TextInput field to update the cardName text in this.state
+     * @param {string} question_ The string to save as the name for the card
+     */
+    UpdateCardName = function (newName_) {
+        this.setState((prevState) => {
+            return ({
+                ...prevState,
+                cardName: newName_
+            });
+        });
     }
 
 
@@ -150,7 +165,7 @@ export default class NewCardScreen extends Component {
             return;
         }
 
-        AsyncStorageLibrary.CreateNewCard(this.props.route.params.setIndex, this.state.questionText, this.state.answerText, this.state.questionImage, this.state.answerImage)
+        AsyncStorageLibrary.CreateNewCard(this.props.route.params.setIndex, this.state.cardName, this.state.questionText, this.state.answerText, this.state.questionImage, this.state.answerImage)
             .then(() => {
                 this.props.navigation.goBack();
             })
@@ -172,6 +187,19 @@ export default class NewCardScreen extends Component {
                 <Text style={styles.subtitleText}>For {this.props.route.params.setName}</Text>
 
                 <ScrollView style={styles.scrollView}>
+                    <View style={styles.inputView}>
+                        <Text style={styles.inputTitleText}>Card Name<Text style={styles.requiredText}>*</Text></Text>
+
+                        <TextInput
+                            style={styles.textInput}
+                            multiline={false}
+                            maxLength={25}
+                            placeholder={"Example: Vocab word X"}
+                            value={this.state.cardName}
+                            onChangeText={(newName_) => this.UpdateCardName(newName_)}
+                        />
+                    </View>
+
                     <View style={styles.inputView}>
                         <Text style={styles.inputTitleText}>Question<Text style={styles.requiredText}>*</Text></Text>
 
@@ -249,10 +277,10 @@ export default class NewCardScreen extends Component {
                     <TouchableOpacity
                         style={styles.createButton}
                         onPress={() => this.CreateNewCard()}
-                        disabled={(this.state.questionText == '' || this.state.answerText == '')}
+                        disabled={(this.state.cardName == '' || this.state.questionText == '' || this.state.answerText == '')}
                     >
-                        {(this.state.questionText != '' && this.state.answerText != '') && <Text style={styles.createText}>Create</Text>}
-                        {(this.state.questionText == '' || this.state.answerText == '') && <Text style={styles.disabledCreateText}>Create</Text>}
+                        {(this.state.cardName != '' && this.state.questionText != '' && this.state.answerText != '') && <Text style={styles.createText}>Create</Text>}
+                        {(this.state.cardName == '' || this.state.questionText == '' || this.state.answerText == '') && <Text style={styles.disabledCreateText}>Create</Text>}
                     </TouchableOpacity>
                 </View>
             </View>
@@ -297,8 +325,9 @@ const styles = StyleSheet.create({
     },
 
     textInput: {
+        backgroundColor: Colors.setWhite,
         borderRadius: 5,
-        borderColor: '#000',
+        borderColor: Colors.setBlack,
         borderWidth: 1,
         paddingLeft: 5,
         paddingRight: 5,
@@ -336,16 +365,16 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderColor: '#000',
         borderWidth: 1,
-        backgroundColor: Colors.lightGrey,
+        backgroundColor: Colors.setWhite,
         alignSelf: 'center',
     },
 
     imageUploadText: {
-        fontSize: 12,
-        paddingLeft: 8,
-        paddingRight: 8,
-        paddingTop: 3,
-        paddingBottom: 3,
+        fontSize: 14,
+        paddingLeft: 12,
+        paddingRight: 12,
+        paddingTop: 6,
+        paddingBottom: 6,
     },
 
     requiredText: {

@@ -24,7 +24,7 @@ export default class ListOfCards extends Component {
                                 navigation={this.props.navigation}
                                 setIndex={this.props.setIndex}
                                 cardIndex={itemData.index}
-                                question={itemData.item.questionText}
+                                question={itemData.item.cardName}
                                 cardData={itemData.item}
                                 setColor={this.props.backgroundColor}
                                 setTextColor={this.props.textColor}
