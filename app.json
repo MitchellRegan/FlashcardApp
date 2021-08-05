@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "FlashcardApp",
-    "slug": "FlashcardApp",
+    "name": "Flashcards",
+    "slug": "Flashcards for faster learning",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#586AC0"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -22,7 +22,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#586AC0"
       }
     },
     "web": {
