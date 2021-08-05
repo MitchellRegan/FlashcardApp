@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Flashcards",
-    "slug": "Flashcards for faster learning",
+    "slug": "Flashcards",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -23,7 +23,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#586AC0"
-      }
+      },
+      "package": "com.mitchregan.Flashcards"
     },
     "web": {
       "favicon": "./assets/favicon.png"
