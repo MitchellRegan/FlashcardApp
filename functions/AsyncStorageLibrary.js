@@ -60,6 +60,33 @@ const AsyncStorageLibrary = {
 
 
     /**
+     * Changes the name, background color, and text color for a set
+     * @param {any} setIndex_ The index of the edited set in our storage array
+     * @param {any} newSetName_ The new name of the set
+     * @param {any} newBackgroundColor_ The new background color for the set
+     * @param {any} newTextColor_ The new text color for the set
+     */
+    EditSet: async function (setIndex_, newSetName_, newBackgroundColor_, newTextColor_) {
+        let setData = await AsyncStorage.getItem(this.storageString)
+            .then(data => {
+                //Parsing the JSON string into an object to get data from it
+                var allSetData = JSON.parse(data);
+
+                //Setting the new set data
+                allSetData.sets[setIndex_].setName = newSetName_;
+                allSetData.sets[setIndex_].backgroundColor = newBackgroundColor_;
+                allSetData.sets[setIndex_].textColor = newTextColor_;
+
+                //Updating the saved data
+                AsyncStorage.setItem(this.storageString, JSON.stringify(allSetData));
+            })
+            .catch(error => {
+                ErrorAlertLibrary.DisplayError("AsyncStorageLibrary.EditSet ERROR", error);
+            })
+    },
+
+
+    /**
      * Deletes the set from AsyncStorage using the given index
      * @param {number} setIndex_ Index for which set to delete
      */
@@ -92,9 +119,7 @@ const AsyncStorageLibrary = {
             questionText: question_,
             questionImage: questionImage_,
             answerText: answer_,
-            answerImage: answerImage_,
-            correct: 0,
-            incorrect: 0
+            answerImage: answerImage_
         }
 
         let setData = await AsyncStorage.getItem(this.storageString)

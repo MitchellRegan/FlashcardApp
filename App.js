@@ -8,6 +8,7 @@ import { MenuProvider } from 'react-native-popup-menu';
 //Screens
 import HomeScreen from './screens/HomeScreen';
 import ViewSetScreen from './screens/ViewSetScreen';
+import EditSetScreen from './screens/EditSetScreen';
 import ViewCardScreen from './screens/ViewCardScreen';
 import NewCardScreen from './screens/NewCardScreen';
 import EditCardScreen from './screens/EditCardScreen';
@@ -26,6 +27,7 @@ export default function App() {
                     <Stack.Navigator headerMode={"none"}>
                         <Stack.Screen name="Home" component={HomeScreen} />
                         <Stack.Screen name="ViewSet" component={ViewSetScreen} />
+                        <Stack.Screen name="EditSet" component={EditSetScreen} />
                         <Stack.Screen name="ViewCard" component={ViewCardScreen} />
                         <Stack.Screen name="NewCard" component={NewCardScreen} />
                         <Stack.Screen name="EditCard" component={EditCardScreen} />

@@ -28,9 +28,7 @@ export default class ViewCardScreen extends Component {
             questionText: '',
             questionImage: null,
             answerText: '',
-            answerImage: null,
-            correct: 0,
-            incorrect: 0
+            answerImage: null
         }
     }
 
@@ -200,11 +198,6 @@ export default class ViewCardScreen extends Component {
                         style={styles.image}
                         source={{ uri: this.state.answerImage }}
                     />}
-
-                    <View style={styles.percentageView}>
-                        <Text style={styles.timesStudiedText}>Times Guessed Correctly:</Text>
-                        <Text style={styles.percentText}>{this.FindPercentCorrect()}</Text>
-                    </View>
                 </ScrollView>
 
                 {/*<View style={styles.editDeleteView}>

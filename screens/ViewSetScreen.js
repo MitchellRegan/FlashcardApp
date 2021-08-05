@@ -10,7 +10,6 @@ import AsyncStorageLibrary from '../functions/AsyncStorageLibrary';
 import ErrorAlertLibrary from '../functions/ErrorAlertLibrary';
 //Components
 import Header from '../components/shared/Header';
-import CardInListButton from '../components/buttons/CardInListButton';
 import ListOfCards from '../components/buttons/ListOfCards';
 //Icons
 import AddCardIcon from '../assets/icons/CirclePlusGold_icon.svg';
@@ -92,6 +91,19 @@ export default class ViewSetScreen extends Component {
 
 
     /**
+     * Method to navigate to the EditSetScreen
+     * */
+    EditSet = function () {
+        this.props.navigation.navigate('EditSet', {
+            setIndex: this.props.route.params.setIndex,
+            setName: this.props.route.params.setData.setName,
+            setColor: this.props.route.params.setData.setColor,
+            setTextColor: this.props.route.params.setData.setTextColor,
+        });
+    }
+
+
+    /**
      * Creates a prompt to make sure the user really wants to delete this set
      * */
     PromptDeleteSet = function () {
@@ -140,6 +152,9 @@ export default class ViewSetScreen extends Component {
                         <ThreeDotMenuIcon height={25} width={25} />
                     </MenuTrigger>
                     <MenuOptions>
+                        <MenuOption onSelect={() => this.EditSet()}>
+                            <Text style={styles.menuEditButton}>Edit</Text>
+                        </MenuOption>
                         <MenuOption onSelect={() => this.PromptDeleteSet()} >
                             <Text style={styles.menuDeleteText}>Delete</Text>
                         </MenuOption>
@@ -184,6 +199,10 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginRight: 5,
         marginBottom: -20,
+    },
+
+    menuEditButton: {
+        fontSize: 18,
     },
 
     menuDeleteText: {
