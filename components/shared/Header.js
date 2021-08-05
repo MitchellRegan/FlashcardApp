@@ -22,7 +22,7 @@ export default class Header extends Component {
      * Displays a hidden alert with build info
      * */
     BuildDetails = function () {
-        Alert.alert("HELLO!", "This app was developed by Mitch Regan\nAugust 5, 2021\nBuild: v" + App.expo.version);
+        Alert.alert("HELLO!", "This app was developed by Mitch Regan on August 5, 2021\nBuild: v" + App.expo.version);
     }
 
 

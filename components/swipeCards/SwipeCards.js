@@ -253,6 +253,10 @@ export default class SwipeCards extends Component {
                 <Text style={styles.resultText}>Correct: {this.state.numCorrect}</Text>
                 <Text style={styles.resultText}>Incorrect: {this.state.numIncorrect}</Text>
 
+                <Text style={styles.resultPercentText}>
+                    {Math.round(100 * (this.state.numCorrect / (this.state.numCorrect + this.state.numIncorrect)))}%
+                </Text>
+
                 <TouchableOpacity style={styles.reshuffleButton} onPress={() => this.ReshuffleDeck()}>
                     <Text style={styles.reshuffleText}>Practice Again</Text>
                 </TouchableOpacity>
@@ -482,11 +486,18 @@ const styles = StyleSheet.create({
         fontSize: 22,
     },
 
+    resultPercentText: {
+        fontFamily: Fonts.serif,
+        fontSize: 36,
+        paddingTop: 15,
+        textAlign: 'center'
+    },
+
     reshuffleButton: {
         borderWidth: 1,
-        borderColor: '#000',
+        borderColor: Colors.setBlack,
         borderRadius: 5,
-        backgroundColor: Colors.lightGrey,
+        backgroundColor: Colors.setWhite,
         marginTop: 20,
         alignSelf: 'center',
     },

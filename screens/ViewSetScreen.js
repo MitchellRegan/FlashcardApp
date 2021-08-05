@@ -24,7 +24,7 @@ export default class ViewSetScreen extends Component {
         super(props);
 
         this.state = {
-            cards: []
+            setData: this.props.route.params.setData
         }
     }
 
@@ -61,7 +61,7 @@ export default class ViewSetScreen extends Component {
                 this.setState(prevState => {
                     return ({
                         ...prevState,
-                        cards: data.sets[this.props.route.params.setIndex].cards
+                        setData: data.sets[this.props.route.params.setIndex]
                     });
                 });
             })
@@ -77,7 +77,7 @@ export default class ViewSetScreen extends Component {
     CreateNewCard = function () {
         this.props.navigation.navigate("NewCard", {
             setIndex: this.props.route.params.setIndex,
-            setName: this.props.route.params.setData.setName
+            setName: this.state.setData.setName
         });
     }
 
@@ -86,7 +86,7 @@ export default class ViewSetScreen extends Component {
      * Called from TouchableOpacity to load this set of flashcards and navigate to the FlashCardScreen
      * */
     PracticeSet = function () {
-        this.props.navigation.navigate("FlashCard", { setData: this.props.route.params.setData });
+        this.props.navigation.navigate("FlashCard", { setData: this.state.setData });
     }
 
 
@@ -96,9 +96,9 @@ export default class ViewSetScreen extends Component {
     EditSet = function () {
         this.props.navigation.navigate('EditSet', {
             setIndex: this.props.route.params.setIndex,
-            setName: this.props.route.params.setData.setName,
-            setColor: this.props.route.params.setData.setColor,
-            setTextColor: this.props.route.params.setData.setTextColor,
+            setName: this.state.setData.setName,
+            setColor: this.state.setData.setColor,
+            setTextColor: this.state.setData.setTextColor,
         });
     }
 
@@ -161,16 +161,16 @@ export default class ViewSetScreen extends Component {
                     </MenuOptions>
                 </Menu>
 
-                <Text style={styles.setNameText}>Cards in {this.props.route.params.setData.setName}</Text>
+                <Text style={styles.setNameText}>Cards in {this.state.setData.setName}</Text>
 
-                {(this.state.cards.length == 0) && <Text style={styles.noCardsText}>There are no cards</Text>}
+                {(this.state.setData.cards.length == 0) && <Text style={styles.noCardsText}>There are no cards</Text>}
 
                 <ListOfCards
-                    cards={this.state.cards}
+                    cards={this.state.setData.cards}
                     navigation={this.props.navigation}
                     setIndex={this.props.route.params.setIndex}
-                    backgroundColor={this.props.route.params.setData.backgroundColor}
-                    textColor={this.props.route.params.setData.textColor}
+                    backgroundColor={this.state.setData.backgroundColor}
+                    textColor={this.state.setData.textColor}
                 />
 
                 {/*<TouchableOpacity style={styles.newCardButton} onPress={() => this.CreateNewCard()}>
@@ -181,8 +181,8 @@ export default class ViewSetScreen extends Component {
                         <AddCardIcon height={45} width={45} />
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.newCardButton} disabled={this.state.cards.length == 0} onPress={() => this.PracticeSet()}>
-                        <Text style={(this.state.cards.length == 0 ? styles.disabledText : styles.newCardButtonText)}>Practice</Text>
+                    <TouchableOpacity style={styles.newCardButton} disabled={this.state.setData.cards.length == 0} onPress={() => this.PracticeSet()}>
+                        <Text style={(this.state.setData.cards.length == 0 ? styles.disabledText : styles.newCardButtonText)}>Practice</Text>
                     </TouchableOpacity>
                 </View>
             </View>
